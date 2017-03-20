@@ -1,0 +1,106 @@
+//===== Hercules Script ======================================
+//= Catalog Magician
+//===== By: ==================================================
+//= skyiing, Scriptor
+//===== Current Version: =====================================
+//= 1.1
+//===== Description: =========================================
+//= [Official Conversion]
+//= Catalogs allow players to easily search for items in-game,
+//= and to buy/sell directly from the catalog interface.
+//===== Additional Comments: =================================
+//= 1.0 Moved from root directory. [Euphy]
+//= 1.1 Updated dialogue. [Euphy]
+//============================================================
+
+moc_para01,22,16,5	script	Catalogador Mágico#catal01	4_M_BIBI,{
+	if (!checkweight(1301,3)) {
+		mes "- Você possui muitos itens. Por favor, abra espaço no inventório primeiro. -";
+		close;
+	}
+	.@ticket_cost = 200;
+	mes "[Catalogador Mágico]";
+	mes "Olha só... A Guilda dos Magos em Geffen";
+	mes "está comercializando diretamente";
+	mes "o novo item,";
+	mes "^007777Catálogo de Vendas Prata^000000!";
+	next;
+	mes "Ele está olhando para as palavras";
+	mes "escritas em sua própria mão.";
+	mes "Parece estar muito ocupado";
+	mes "para olhar para você.";
+	next;
+	mes "[Catalogador Mágico]";
+	mes "Esse novo item";
+	mes "foi lançado recentemente!";
+	mes "Você pode verificar";
+	mes "quais os itens que você poderá comercializar";
+	mes "e quais itens estão à venda";
+	mes "pelas lojas montadas na cidade em que estiver";
+	next;
+	mes "[Catalogador Mágico]";
+	mes "O ^007777Catálogo de Vendas Prata^000000";
+	mes "Custa apenas 200z cada!";
+	mes "Você pode comprar apenas 50 de cada vez!";
+	next;
+	switch(select("Comprar ^007777Catálogo de Vendas Prata^000000:Eu não preciso disso!:Você não é vendedor... é?")) {
+	case 1:
+		mes "[Catalogador Mágico]";
+		mes "Você... Quer comprar os 50?";
+		mes "Quantos... Quantos gostaria de comprar?";
+		next;
+		while (1) {
+			input .@input;
+			mes "[Catalogador Mágico]";
+			if (.@input == 0) {
+				mes "A negociação não será concluída, mas...";
+				mes "Eu não sei o que fazer...";
+				mes "O que eu deveria fazer agora?";
+				emotion e_swt2,1;
+				close;
+			} else if (.@input < 1 || .@input > 50) {
+				mes "Você deve comprar até 50 itens por vez.";
+				next;
+			} else
+				break;
+		}
+		.@sell = .@ticket_cost * .@input;
+		mes "O número total de catálogo(s) que está comprando é de " + .@input + " itens.";
+		mes "e vai sair por apenas " + .@sell + " zenys.";
+		if (Zeny < .@sell) {
+			mes "Parece que não possui dinheiro suficiente.";
+			mes "Você pode vender seus equipamentos";
+			mes "para fazer mais dinheiro... o que acha?";
+			close;
+		}
+		mes "Ok, vamos lá.";
+		Zeny -= .@sell;
+		getitem 12580,.@input; //Catálogo_de_Vendas_Prata
+		close;
+	case 2:
+		mes "[Catalogador Mágico]";
+		mes "Argh... você realmente precisará";
+		mes "desses itens... Você quer que eu lhe explique novamente?";
+		mes "Eu não sei o que devo fazer agora...";
+		mes "O que eu devo fazer?";
+		mes "O que eu devo fazer?";
+		emotion e_swt2,1;
+		close;
+	case 3:
+		mes "[Catalogador Mágico]";
+		mes "Realmente minha classe é 'Mago'.";
+		mes "Eu fui aprender algumas técnicas de comércio na";
+		mes "Guilda dos Mercadores para poder";
+		mes "vender esse novo item.";
+		mes "É por isso que estou vendendo por conta própria";
+		mes "esses catálogos mágicos.";
+		next;
+		mes "[Catalogador Mágico]";
+		mes "Existem muitos aventureiros aqui";
+		mes "que sempre vem e vão.";
+		mes "Tenho certeza que venderei todos esses itens em breve.";
+		mes "Você não acha? Então, vamos vender !";
+		mes "Quer comprar mais alguns? Por favor?!... POR FAVORRR?!";
+		close;
+	}
+}
