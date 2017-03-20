@@ -1,0 +1,206 @@
+//===== Hercules Script ======================================
+//= Renters
+//===== By: ==================================================
+//= Hercules Dev Team
+//===== Current Version: =====================================
+//= 2.1
+//===== Description: =========================================
+//= [Official Conversion]
+//= Renewal-specific breeder NPCs.
+//===== Additional Comments: =================================
+//= 2.1 Moved some renters to a separate renewal file. [Daegaladh]
+//= 2.2 Updated to match the official scripts. [Euphy]
+//============================================================
+
+// Dragon Breeder
+//============================================================
+job3_rune01,88,62,5	script	Criador de Dragões	8W_SOLDIER,{
+	mes "[Criador de Dragões]";
+	if (Class == Job_Rune_Knight || Class == Job_Rune_Knight_T || Class == Job_Baby_Rune) {
+		mes "Bem vindo. Você gostaria de alugar um Dragão como montaria?";
+		next;
+		switch(select("Sim:Não")) {
+		case 1:
+			//if (!getskilllv(RK_DRAGONTRAINING)) {
+			if (!getskilllv(KN_RIDING)) {
+				mes "[Criador de Dragões]";
+				mes "Por favor, aprenda a habilidade Adestrar Dragão primeiro.";
+				close;
+			} else if (checkmount()) {
+				mes "[Criador de Dragões]";
+				mes "Você já possui uma montaria.";
+				close;
+			} else if(hascashmount()) {
+				mes "[Criador de Dragões]";
+				mes "Você já possui uma montaria.";
+				close;
+			}
+			setmount(MOUNT_DRAGON);
+			close;
+		case 2:
+			mes "[Criador de Dragões]";
+			mes "Entendo. Então tenha um ótimo dia.";
+			close;
+		}
+	}
+	mes "O que você está fazendo aqui?";
+	mes "Somente Cavaleiros Rúnicos podem alugar Dragões.";
+	close;
+}
+
+// Mestre de Dragões/Grifos
+//============================================================
+prontera,130,213,5	script	Mestre de Criaturas	8W_SOLDIER,{
+	mes "[Mestre de Criaturas]";
+	if (Class == Job_Rune_Knight || Class == Job_Rune_Knight_T || Class == Job_Baby_Rune) {
+		mes "Bem vindo. Você gostaria de alugar um Dragão como montaria?";
+		next;
+		switch(select("Sim:Não")) {
+		case 1:
+			//if (!getskilllv(RK_DRAGONTRAINING)) {
+			if (!getskilllv(KN_RIDING)) {
+				mes "[Mestre de Criaturas]";
+				mes "Por favor, aprenda a habilidade Adestrar Dragão primeiro.";
+				close;
+			} else if (checkmount()) {
+				mes "[Mestre de Criaturas]";
+				mes "Você já possui uma montaria.";
+				close;
+			} else if(hascashmount()) {
+				mes "[Mestre de Criaturas]";
+				mes "Você já possui uma montaria.";
+				close;
+			}
+			setmount(MOUNT_DRAGON);
+			close;
+		case 2:
+			mes "[Mestre de Criaturas]";
+			mes "Entendo. Então tenha um ótimo dia.";
+			close;
+		}
+	}
+	if (Class == Job_Royal_Guard || Class == Job_Royal_Guard_T || Class == Job_Baby_Guard) {
+		mes "Bem vindo. Gostaria de alugar um Grifo como montaria?";
+		next;
+		switch(select("Sim:Não")) {
+		case 1:
+			if(!getskilllv(KN_RIDING)) {
+				mes "[Mestre de Criaturas]";
+				mes "Por favor, aprenda a habilidade de Montaria primeiro.";
+				close;
+			} else if (checkmount()) {
+				mes "[Mestre de Criaturas]";
+				mes "Você já possui uma montaria.";
+				close;
+			} else if(hascashmount()) {
+				mes "[Mestre de Criaturas]";
+				mes "Você já possui uma montaria.";
+				close;
+			}
+			setmount(MOUNT_PECO);
+			close;
+		case 2:
+			mes "[Mestre de Criaturas]";
+			mes "Entendo. Então tenha um ótimo dia.";
+			close;
+		}
+	}
+	mes "Eu estou aqui para fornecer a Cavaleiros Rúnicos e Guardiões Reais criaturas para montar.";
+	close;
+}
+
+geffen,100,55,3	duplicate(Mestre de Criaturas)	Mestre de Criaturas#2	8W_SOLDIER
+payon,166,102,5	duplicate(Mestre de Criaturas)	Mestre de Criaturas#3	8W_SOLDIER
+aldebaran,133,109,5	duplicate(Mestre de Criaturas)	Mestre de Criaturas#4	8W_SOLDIER
+yuno,171,187,3	duplicate(Mestre de Criaturas)	Mestre de Criaturas#5	8W_SOLDIER
+rachel,106,130,5	duplicate(Mestre de Criaturas)	Mestre de Criaturas#6	8W_SOLDIER
+
+// Removedor de Montaria
+//============================================================
+prontera,125,208,5	script	Removedor de Montaria	8W_SOLDIER,{
+	mes "[Soldado]";
+	mes "Se você não conseguir desmontar de um Peco Peco";
+	mes "por alguma razão desconhecida,";
+	mes "por favor, sinta-se livre para usar meus serviços.";
+	if (checkmount() == MOUNT_PECO) {
+		next;
+		mes "[Soldado]";
+		mes "Você está montado em um Peco Peco.";
+		mes "Gostaria de desmontá-lo?";
+		next;
+		switch(select("Sim:Não")) {
+		case 1:
+			setmount(MOUNT_NONE);
+			mes "[Soldado]";
+			mes "Diga, como você se sente";
+			mes "ao pisar no chão com os";
+			mes "próprios pés novamente?";
+			close;
+		case 2:
+			mes "[Soldado]";
+			mes "Entendo. Sinta-se à vontade para conversar comigo novamente";
+			mes "se você mudar de ideia.";
+			close;
+		}
+	}
+	close;
+}
+
+// Magic Gear Renter
+//============================================================
+-	script	::mgm	-1,{
+	mes "[Mestre da Engrenagem]";
+	if (Class == Job_Mechanic || Class == Job_Mechanic_T || Class == Job_Baby_Mechanic) {
+		mes "Bem vindo, mecânico.";
+		mes "Você gostaria de alugar um Carrinho ou";
+		mes "montar em um M.E.C.H.A?";
+		next;
+		switch(select("Alugar um Carrinho:Alugar um M.E.C.H.A:Cancelar")) {
+		case 1:
+			if (checkcart()) {
+				mes "[Mestre da Engrenagem]";
+				mes "Sinto muito, mas você já";
+				mes "possui um carrinho.";
+				close;
+			}
+			setcart;
+			mes "[Mestre da Engrenagem]";
+			mes "Ai está!";
+			close;
+		case 2:
+			if (checkmount() == MOUNT_MADO) {
+				mes "[Mestre da Engrenagem]";
+				mes "Sinto muito, mas você já está";
+				mes "montado em um M.E.C.H.A.";
+				close;
+			} else if (!getskilllv(NC_MADOLICENCE)) {
+				mes "[Mestre da Engrenagem]";
+				mes "Por favor, aprenda a habilidade Licença de Pilotagem primeiro.";
+				close;
+			} else if(hascashmount()) {
+				mes "[Mestre da Engrenagem]";
+				mes "Por favor, remova a sua montaria atual primeiro.";
+				close;
+			}
+			setmount(MOUNT_MADO);
+			mes "[Mestre da Engrenagem]";
+			mes "Divirta-se, e por favor, volte sempre que precisar!";
+			close;
+		case 3:
+			close;
+		}
+	}
+	mes "Será que eu posso ajuda-lo?";
+	mes "M.E.C.H.A.S estão disponíveis apenas para Mecânicos.";
+	close;
+}
+prontera,163,178,3	duplicate(mgm)	Mestre da Engrenagem#prt	8W_SOLDIER
+geffen,103,55,5	duplicate(mgm)	Mestre da Engrenagem#gef	8W_SOLDIER
+payon,166,106,5	duplicate(mgm)	Mestre da Engrenagem#pay	8W_SOLDIER
+aldebaran,133,112,5	duplicate(mgm)	Mestre da Engrenagem#alde	8W_SOLDIER
+yuno,167,187,3	duplicate(mgm)	Mestre da Engrenagem#yuno	8W_SOLDIER
+rachel,106,134,5	duplicate(mgm)	Mestre da Engrenagem#ra	8W_SOLDIER
+dicastes01,187,207,3	duplicate(mgm)	Mestre da Engrenagem#dic	8W_SOLDIER
+manuk,273,212,5	duplicate(mgm)	Mestre da Engrenagem#man	8W_SOLDIER
+splendide,180,174,5	duplicate(mgm)	Mestre da Engrenagem#spl	8W_SOLDIER
+mid_camp,242,243,3	duplicate(mgm)	Mestre da Engrenagem#mid	8W_SOLDIER
