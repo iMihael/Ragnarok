@@ -1,0 +1,353 @@
+//===== Hercules Script ====================================== 
+//= Ninja Weapon and Armor
+//===== By: ================================================== 
+//= Dastgir
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Description: ========================================= 
+//= Ninja Armor and Weapon Craftsman
+//===== Additional Comments: ================================= 
+//= 1.0 Official Conversion. [Dastgir]
+//============================================================ 
+que_ng,21,72,6	script	Mestre Artesão Gyo#arm	4_M_RASWORD,{
+	mes "[Gyo]";
+	mes "Como você definiria a vitória?";
+	mes "A queda de um inimigo...";
+	mes "No entanto, o mais importante é...";
+	mes "Nunca se deixar ser derrubado!";
+	next;
+	mes "[Gyo]";
+	mes "Para isso, você deve se proteger melhor.";
+	mes "Você não pode proteger os 'outros' enquanto você impede a sua 'própria' proteção.";
+	next;
+	if (select("Criar Armaduras.:Finalizar Conversa.") == 2) {
+		mes "[Gyo]";
+		mes "A prudência é também uma virtude importante na batalha.";
+		close;
+	}
+	switch (select("Proteção de Braço do Lobo:Proteção de Braço da Lua Crescente:Armadura de Escamas do Ninja:Armadura do Rei das Sombras:Sair.")) {
+		case 1:
+			mes "[Gyo]";
+			mes "Proteção de Braço do Lobo... Um pedaço da Armadura das Bestas.";
+			next;
+			callsub L_Menu,Wolf_Armguard;
+			close;
+		case 2:
+			mes "[Gyo]";
+			mes "Proteção de Braço da Lua Crescente... Belo e forte... Como nenhum outro.";
+			next;
+			callsub L_Menu,Crescent_Armguard;
+			close;
+		case 3:
+			mes "[Gyo]";
+			mes "Armadura de Escamas do Ninja... Dizem que um lendário Ninja a usou uma vez.";
+			next;
+			callsub L_Menu,Ninja_Scale_Armor;
+			close;
+		case 4:
+			mes "[Gyo]";
+			mes "Armadura do Rei das Sombras... Ela foi feito para proteger os outros.";
+			next;
+			callsub L_Menu,Tenebris_Latitantes;
+			close;
+		case 5:
+			mes "[Gyo]";
+			mes "Parece que você precisa de mais tempo para se decidir.";
+			close;
+	}
+		
+L_Menu:
+	.@item_make = getarg(0);
+	while(1){
+		switch(select("Itens Necessários.:Verificar Atributos.:Criar.:Sair.")){
+			case 1:
+				mes "[Gyo]";
+				mes "Para fazer uma ^ff0000"+getitemname(.@item_make)+", "+callsub(L_Ingredients,.@item_make)+".^000000";
+				if (.@item_make==Wolf_Armguard)
+					mes "Pode sentir isso? O palpitar do sangue de lobo!!";
+				else if (.@item_make==Crescent_Armguard)
+					mes "Uma lua crescente bonita e clara como um cristal será gravado nela.";
+				else if (.@item_make==Ninja_Scale_Armor)
+					mes "Você pode sentir seus poderes lendários.";
+				else if (.@item_make==Tenebris_Latitantes)
+					mes "Com a escuridão ela apaga a própria existência...";
+				break;
+			case 2:
+				mes "["+ getitemname(getarg(0)) +"]";
+				if (.@item_make == Wolf_Armguard){
+					mes "ATQ +100 e Esquiva -50 por 5 segundos ao atacar fisicamente a curta distância.";
+					mes "Tipo: Escudo, Defesa: 70, Slots: 1";
+					mes "Nível Necessário: 100, Classes: Ninja e evoluções";
+				}
+				else if (.@item_make == Crescent_Armguard){
+					mes "Reduz o tempo entre habilidades em 2% por nível de refinamento.";
+      				mes "Tipo: Escudo, Defesa: 45, Slots: 1";
+      				mes "Nível Necessário: 100, Classes: Ninja e evoluções";
+				}
+				else if (.@item_make == Ninja_Scale_Armor){
+      				mes "HP máximo +15%, SP máximo -30%.";
+					mes "ATQ +10% e FOR +2 adicionais quando usado em conjunto com a Proteção de Braço do Lobo.";
+      				mes "Tipo: Armadura, Defesa: 90, Slots: 1";
+      				mes "Nível Necessário: 100, Classes: Ninja e evoluções";
+				}
+				else if (.@item_make == Tenebris_Latitantes){
+					mes "AGI +1. Ao sofrer um ataque corporal, há a chance de conjurar Genjutsu: Clone das Sombras Nv. 1.";
+					mes "Esquiva +10 quando usado em conjunto com a Proteção de Braço da Lua Crescente.";
+      				mes "Tipo: Armadura, Defesa: 60, Slots: 1";
+      				mes "Nível Necessário: 100, Classes: Ninja e evoluções";
+				}
+				break;
+			case 3:
+				mes "[Gyo]";
+        		mes "Certifique-se de que ^ff0000você tenha os ingredientes e equipamentos corretos em mãos.^000000";
+        		mes "Não adianta chorar se algo der errado mais tarde.";
+        		next;
+        		if (select("Criar.:Sair.") == 2) {
+					mes "[Gyo]";
+					mes "Parece que você precisa de mais tempo para decidir.";
+					close;
+				}
+                if (checkweight(1201,1) == 0 || (MaxWeight - Weight) < 2000) {
+					mes "- Espere ai!! -";
+					mes "- Você não pode receber mais itens -";
+					mes "- Porque você já está com o inventório cheio. -";
+					mes "- Por favor, tente novamente -";
+					mes "- Depois de guardar algumas coisas. -";
+					close;
+                }
+				mes "[Gyo]";
+				switch(.@item_make){
+					case 2172:	//Proteção_de_Braço_do_Lobo
+						if (countitem(Fox_Armguard) && countitem(Wolf_Blood) > 9) {
+							delitem Fox_Armguard,1; //Proteção_de_Braço_da_Raposa
+							delitem Wolf_Blood,10; //Sangue_de_Lobo
+							getitem Wolf_Armguard,1; //Proteção_de_Braço_do_Lobo
+							mes "Você pode sentir o instinto do lobo?";
+							mes "Selvagem, mas bonito!!";
+						}
+						else {
+							mes "Você não possui todos os itens necessários.";
+							mes "Olhe o seu inventório novamente......";
+						}
+						break;
+					case 2173: //Proteção_de_Braço_da_Lua_Crescente
+						if (countitem(Fox_Armguard) && countitem(Fragment_Of_Crystal) > 99) {
+							 delitem Fox_Armguard,1; //Proteção_de_Braço_da_Raposa
+							 delitem Fragment_Of_Crystal,100; //Fragmento_de_Cristal
+							 getitem Crescent_Armguard,1; //Proteção_de_Braço_da_Lua_Crescente
+							 mes "L-i-n-do......";
+							 mes "Sinta a magia esmagadora dentro de você.";
+						 }
+						 else {
+							mes "Você não possui todos os itens necessários.";
+							mes "Olhe o seu inventório novamente......";
+						 }
+						 break;
+					case 15054:	//Armadura_de_Escamas_do_Ninja
+						if (countitem(Scale_Of_Red_Dragon) > 29 && countitem(Ice_Scale) > 29 && countitem(Dark_Red_Scale) > 29) {
+							delitem Scale_Of_Red_Dragon,30; //Escama_de_Dragão_de_Fogo
+							delitem Ice_Scale,30; //Escama_de_Gelo
+							delitem Dark_Red_Scale,30; //Escama_Vermelha-Escura
+							getitem Ninja_Scale_Armor,1; //Armadura_de_Escamas_do_Ninja
+							mes "Existe uma lenda por trás dessa armadura...";
+							mes "Embora eu não acredite nela...";
+						}
+						else {
+							mes "Você não possui todos os itens necessários.";
+							mes "Olhe o seu inventório novamente......";
+						}
+						break;
+					case 15055:	//Armadura_do_Rei_das_Sombras
+						if (countitem(Special_Ninja_Suit_) && countitem(Piece_Of_Darkness) > 9) {
+							delitem Special_Ninja_Suit_,1; //Indumentária_Ninja_Especial
+							delitem Piece_Of_Darkness,10; //Fragmento_Sombrio
+							getitem Tenebris_Latitantes,1; //Armadura_do_Rei_das_Sombras
+							mes "Que tal?";
+							mes "Parece que são dois conjuntos dela, não é?";
+						}
+						else {
+							mes "Você não possui todos os itens necessários.";
+							mes "Olhe o seu inventório novamente......";
+						}
+						break;
+				}
+				close;
+			case 4:
+				mes "[Gyo]";
+				mes "Parece que você precisa de mais tempo para decidir.";
+				close;
+		}
+		next;
+	}
+	
+L_Ingredients:
+	switch(getarg(0)){
+		case 2172:	//Proteção_de_Braço_do_Lobo
+			return "Você precisa de 1x Proteção de Braço da Raposa e 10x Sangue de Lobo";
+		case 2173: //Proteção_de_Braço_da_Lua_Crescente
+			return "Você precisa de 1x Proteção de Braço da Raposa e 100x Fragmento de Cristal";
+		case 15054:	//Armadura_de_Escamas_do_Ninja
+			return "Você precisa de 30x Escama de Dragão de Fogo, 30x Escama de Gelo e 30x Fragmento Sombrio";
+		case 15055: //Armadura_do_Rei_das_Sombras
+			return "Você precisa de 1x Indumentária Ninja Especial [1] e 10x Fragmento Sombrio";
+	}
+	end;
+	
+}
+
+que_ng,23,70,6	script	Mestre Artesão Ki#weap	4_DST_SOLDIER,{
+	mes "[Ki]";
+	mes "Atacar é o melhor meio de defesa.";
+	mes "Uma arma poderosa fará você realmente completo.";
+	next;
+	mes "[Ki]";
+	mes "Claro, seria melhor ter algo especial à mão.";
+	next;
+	if (select("Criar Armas.:Encerrar Conversa.") == 2) {
+		mes "[Ki]";
+		mes "Ser cuidadoso de mais às vezes pode ser letal.";
+		close;
+	}
+	switch (select("Adaga Raksasa:Mikatsuki:Shuriken de Pétalas:Sair.")) {
+		case 1:
+			mes "[Ki]";
+			mes "A Adaga Raksasa só pode ser usada após muito treinamento.";
+			next;
+			callsub L_Menu,Raksasa_Dagger;
+			close;
+		case 2:
+			mes "[Ki]";
+			mes "Mikatsuki... Uma curva bonita como a lua crescente...";
+			mes "Não há muitos que possam usa-la.";
+			next;
+			callsub L_Menu,Mikatsuki;
+			close;
+		case 3:
+			mes "[Ki]";
+			mes "Shuriken de Pétalas... Você já viu as pétalas em um redemoinho?";
+			next;
+			callsub L_Menu,Huuma_Swirling_Petal;
+			close;
+		case 4:
+			mes "[Ki]";
+			mes "Pense com cuidado~~";
+			close;
+	}
+		
+L_Menu:
+	.@item_make = getarg(0);
+	while(1){
+		switch(select("Itens Necessários.:Verificar Atributos.:Criar.:Sair.")){
+			case 1:
+				mes "[Ki]";
+				mes "Para fazer uma ^ff0000"+getitemname(.@item_make)+", "+callsub(L_Ingredients,.@item_make)+".^000000";
+				if (.@item_make==Raksasa_Dagger)
+					mes "A granada dá a Adaga Raksasa uma cor única.";
+				else if (.@item_make==Mikatsuki)
+					mes "O opala é o que emite o brilho translúcido da Mikatsuki.";
+				else if (.@item_make==Huuma_Swirling_Petal)
+					mes "Pode parecer como muitos shurikens... Mas possui um efeito único e lindo.";
+				break;
+			case 2:
+				mes "["+ getitemname(getarg(0)) +"]";
+				if (.@item_make == Raksasa_Dagger){
+					mes "INT +3, ATQM +100.";
+      				mes "Tipo: Adaga, Ataque: 120, Slots: 1";
+      				mes "Nível Necessário: 110, Classes: Ninja e evoluções";
+				}
+				else if (.@item_make == Mikatsuki){
+					mes "ATQM +120, Reduz em 5% o consumo de SP e Diminui um pouco do tempo de conjuração variável.";
+      				mes "Tipo: Adaga, Ataque: 50, Nível da Arma: 4";
+      				mes "Slots: 1";
+      				mes "Nível Necessário: 100, Classes: Ninja e evoluções";
+				}
+				else if (.@item_make == Huuma_Swirling_Petal){
+      				mes "ATQM +50, Aumenta o dano da habilidade Turbilhão de Pétalas em 20%.";
+      				mes "Tipo: Shuriken Huuma, Ataque: 150";
+      				mes "Nível da Arma: 3, Slots: 2";
+      				mes "Nível Necessário: 110, Classes: Ninja e evoluções";
+				}
+				break;
+			case 3:
+				mes "[Ki]";
+        		mes "Certifique-se de que ^ff0000ter os itens necessários em mãos.^000000";
+        		mes "E não venha chorar depois.";
+        		next;
+        		if (select("Criar.:Sair.") == 2) {
+					mes "[Ki]";
+					mes "Pense com cuidado~~";
+					close;
+				}
+                if (checkweight(1201,1) == 0 || (MaxWeight - Weight) < 2000) {
+					mes "- Espere ai!! -";
+					mes "- Você não pode receber mais itens -";
+					mes "- pois já possui muitos em seu inventório. -";
+					mes "- Por favor, tente novamente -";
+					mes "- depois de guardar alguns deles. -";
+					close;
+                }
+				mes "[Ki]";
+				switch(.@item_make){
+					case 13076:	//Adaga_Raksasa
+						 if (countitem(Murasame_) && countitem(Dark_Red_Jewel)) {
+                                delitem Murasame_,1; //Murasame
+                                delitem Dark_Red_Jewel,1; //Granada
+                                getitem Raksasa_Dagger,1; //Adaga_Raksasa
+                                mes "Oh yes...";
+                                mes "It is a beautiful glow...";
+                            }
+                            else {
+                            	mes "Hmm... Você não tem o suficiente para fazer uma Adaga Raksasa.";
+                            	mes "Por que você não verifica o inventório novamente?";
+                            	mes "Alguns simplesmente não podem desistir do que possuem.";
+                            }
+						break;
+					case 13078: //Mikatsuki
+						 if (countitem(Hakujin_) && countitem(White_Jewel)) {
+                                delitem Hakujin_,1; //Hakujin
+                                delitem White_Jewel,1; //Opala
+                                getitem Mikatsuki,1; //Mikatsuki
+                                mes "Esplendido!!";
+                                mes "É sempre hipnotizante olhar para uma arma tão bonita!!";
+                            }
+                            else {
+                                mes "Hmm... Você não tem o suficiente para fazer uma Mikatsuki.";
+                            	mes "Por que você não verifica o inventório novamente?";
+                            	mes "Alguns simplesmente não podem desistir do que possuem.";
+                            }
+						 break;
+					case 13313:	//Shuriken_de_Pétalas
+						 if (countitem(Huuma_Calm_Mind) && countitem(Broken_Shuriken) > 99) {
+                                delitem Huuma_Calm_Mind,1; //Huuma_da_Calmaria
+                                delitem Broken_Shuriken,100; //Shuriken_Despedaçado
+                                getitem Huuma_Swirling_Petal,1; //Shuriken_de_Pétalas
+                                mes "Rodopio das Pétalas!!";
+                            }
+                            else {
+                                mes "Hmm... Você não tem o suficiente para fazer uma Mikatsuki.";
+                            	mes "Por que você não verifica o inventório novamente?";
+                            	mes "Alguns simplesmente não podem desistir do que possuem.";
+                            }
+						break;
+				}
+				close;
+			case 4:
+				mes "[Ki]";
+				mes "Parece que você precisa de mais tempo para decidir.";
+				close;
+		}
+		next;
+	}
+	
+L_Ingredients:
+	switch(getarg(0)){
+		case 13076:	//Adaga_Raksasa
+			return "Você precisa de 1x Murasame [2] e 1x Granada";
+		case 13078: //Mikatsuki
+			return "Você precisa de 1x Hakujin [1] e 1x Opala";
+		case 13313:	//Shuriken_de_Pétalas
+			return "Você precisa de 1x Huuma da Calmaria e 100x Shuriken Despedaçado";
+	}
+	end;
+	
+}
