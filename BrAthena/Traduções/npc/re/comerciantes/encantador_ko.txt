@@ -1,0 +1,556 @@
+//===== Hercules Script ======================================
+//= Kagerou/Oboro Gear Enchants
+//===== By: ==================================================
+//= Euphy
+//===== Current Version: =====================================
+//= 1.0
+//===== Description: =========================================
+//= [Official Conversion]
+//= Adds enchantments to Kagerou/Oboro gear.
+//===== Additional Comments: =================================
+//= 1.0 First version. [Euphy]
+//============================================================
+
+// Main NPC :: job_ko
+//============================================================
+que_ng,75,20,3	script	Artesão Tene#ko	4_M_JPN2,{
+	disable_items;
+	mes "[Artesão Tene]";
+	mes "Olá? Eu sou um Artesão Tene, o ferreiro mais respeitado de todos.";
+	next;
+	mes "[Artesão Tene]";
+	mes "Como eu posso te ajudar?";
+	next;
+	switch (select("Que tipo de ferreiro?:Quero adicionar encantamentos.:Quero remover encantamentos.")) {
+	case 1: // Que tipo de ferreiro?
+		mes "[Artesão Tene]";
+		mes "Oh! Me desculpe, Não me apresentei corretamente.";
+		next;
+		mes "[Artesão Tene]";
+		mes "Eu posso adicionar ou remover encantamentos de algumas armas e armaduras a um preço pequeno.";
+		next;
+		mes "[Artesão Tene]";
+		mes "Oh! Você quer saber a lista de armas e armaduras que eu trabalho?";
+		next;
+		switch (select("Olhar lista de Armas.:Olhar lista de Armaduras.")) {
+		case 1: // Olhar lista de Armas
+			mes "[Artesão Tene]";
+			mes "Então você está interessado na lista de armas?";
+			next;
+			mes "[Artesão Tene]";
+			mes "As armas que eu trabalho são essas ";
+			mes "^ff0000Adaga Raksasa [1]^000000";
+			mes "^ff0000Mikatsuki [1]^000000";
+			mes "^ff0000Shuriken de Pétalas [2]^000000";
+			mes "^ff0000Shuriken da Nevasca^000000";
+			mes "^ff0000Shuriken do Trovão^000000";
+			break;
+		case 2: // Olhar lista de Armaduras
+			mes "[Artesão Tene]";
+			mes "Então você está interessado na lista de armaduras?";
+			next;
+			mes "[Artesão Tene]";
+			mes "As armaduras que eu trabalho são essas ";
+			mes "^ff0000Proteção de Braço do Lobo [1]^000000";
+			mes "^ff0000Proteção de Braço da Lua Crescente [1]^000000";
+			mes "^ff0000Armadura de Escamas do Ninja [1]^000000";
+			mes "^ff0000Armadura do Rei das Sombras [1]^000000";
+			mes "^ff0000Indumentária Ninja Especial [1]^000000";
+			break;
+		}
+		next;
+		mes "[Artesão Tene]";
+		mes "É isso. Ainda estou na prática para aprender e lidar com mais equipamentos de batalha.";
+		next;
+		mes "[Artesão Tene]";
+		mes "Se você quiser, posso adicionar encantamentos em seus 4º e 3º Slots por um pequeno custo.";
+		close;
+	case 2: // Quero adicionar encantamentos
+		mes "[Artesão Tene]";
+		mes "Oh! Você precisa adicionar um encantamento.";
+		mes "Eu adiciono eles para você, em seus 4º e 3º slots do seu equipamento.";
+		next;
+		mes "[Artesão Tene]";
+		mes "Apesar da adição de encantamentos ser estável, não há riscos de ^ff0000'Perder Refinamento'^000000 ou ^ff0000'Cartas'^000000 equipadas em seus itens.";
+		next;
+		mes "[Artesão Tene]";
+		mes "Mas como os custos dos materiais são altos, só peço uma ^5565AAuma pequena taxa^000000 pelos os meus serviços, com exceção das despesas materiais.";
+		next;
+		mes "[Artesão Tene]";
+		mes "Ha ha. Eu já devo ter falado demais. Qual classe de equipamento você deseja tentar encantar?";
+		next;
+		switch (select("Arma...:Equipamento...")) {
+		case 1:
+			mes "[Artesão Tene]";
+			mes "Então será sua arma. O custo é de ^ff0000100,000 Zenys.^000000";
+			next;
+			mes "[Artesão Tene]";
+			mes "^FF0000Ah! Posso adicionar um encantamento adicional se você equipar uma arma com uma mão na mão direita, porque é mais fácil para mim trabalhar nela assim.^000000";
+			next;
+			mes "[Artesão Tene]";
+			mes "Então? Qual arma que será encantada?";
+			next;
+			switch (select("Desistir...:Adaga Raksasa [1]:Mikatsuki [1]:Shuriken de Pétalas [2]:Shuriken da Nevasca:Shuriken do Trovão")) {
+			case 1:
+				mes "[Artesão Tene]";
+				mes "Mudou de idéia? Muito bem. Espero te ver mais tarde.";
+				close;
+			case 2:
+				.@equip_id = Raksasa_Dagger;
+				break;
+			case 3:
+				.@equip_id = Mikatsuki;
+				break;
+			case 4:
+				.@equip_id = Huuma_Swirling_Petal;
+				break;
+			case 5:
+				.@equip_id = Huuma_Fluttering_Snow;
+				break;
+			case 6:
+				.@equip_id = Huuma_Thunderstorm;
+				break;
+			}
+			.@part = EQI_HAND_R;
+			break;
+		case 2:
+			mes "[Artesão Tene]";
+			mes "Então será seu equipamento. O custo é de ^ff0000100,000 Zenys.^000000";
+			next;
+			mes "[Artesão Tene]";
+			mes "Então? Qual desses será encantado?";
+			next;
+			switch (select("Desistir...:Proteção de Braço do Lobo [1]:Proteção de Braço da Lua Crescente [1]:Armadura de Escamas do Ninja [1]:Armadura do Rei das Sombras [1]:Indumentária Ninja Especial [1]")) {
+			case 1:
+				mes "[Artesão Tene]";
+				mes "Mudou de idéia? Muito bem. Espero te ver mais tarde.";
+				close;
+			case 2:
+				.@part = EQI_HAND_L;
+				.@equip_id = Wolf_Armguard;
+				break;
+			case 3:
+				.@part = EQI_HAND_L;
+				.@equip_id = Crescent_Armguard;
+				break;
+			case 4:
+				.@part = EQI_ARMOR;
+				.@equip_id = Ninja_Scale_Armor;
+				break;
+			case 5:
+				.@part = EQI_ARMOR;
+				.@equip_id = Tenebris_Latitantes;
+				break;
+			case 6:
+				.@part = EQI_ARMOR;
+				.@equip_id = Special_Ninja_Suit_;
+				break;
+			}
+			break;
+		}
+		break;
+	case 3: // Quero remover encantamentos
+		mes "[Artesão Tene]";
+		mes "Então você deseja remover um encantamento de seu item. Não gostou do que saiu Ha Ha?";
+		next;
+		mes "[Artesão Tene]";
+		mes "Desculpe, se te decepcionei. No final, espero que não tenha jogado seu dinheiro fora.";
+		next;
+		mes "[Artesão Tene]";
+		mes "^ff0000Remover encantamentos custa 100,000 Zenys.^000000 Qual desses itens gostaria que tivesse o encantamento removido?";
+		next;
+		switch(select("Desistir...:Adaga Raksasa [1]:Mikatsuki [1]:Shuriken de Pétalas [2]:Shuriken da Nevasca:Shuriken do Trovão:Proteção de Braço do Lobo [1]:Proteção de Braço da Lua Crescente [1]:Armadura de Escamas do Ninja [1]:Armadura do Rei das Sombras [1]:Indumentária Ninja Especial [1]")) {
+		case 1:
+			mes "[Artesão Tene]";
+			mes "Remover encantamentos é caro, não é? Sinto muito. Irei trabalhar mais no desenvolvimento de minhas habilidades para também reduzir os custos.";
+			close;
+		case 2:
+			.@part = EQI_HAND_R;
+			.@equip_id = Raksasa_Dagger;
+			break;
+		case 3:
+			.@part = EQI_HAND_R;
+			.@equip_id = Mikatsuki;
+			break;
+		case 4:
+			.@part = EQI_HAND_R;
+			.@equip_id = Huuma_Swirling_Petal;
+			break;
+		case 5:
+			.@part = EQI_HAND_R;
+			.@equip_id = Huuma_Fluttering_Snow;
+			break;
+		case 6:
+			.@part = EQI_HAND_R;
+			.@equip_id = Huuma_Thunderstorm;
+			break;
+		case 7:
+			.@part = EQI_HAND_L;
+			.@equip_id = Wolf_Armguard;
+			break;
+		case 8:
+			.@part = EQI_HAND_L;
+			.@equip_id = Crescent_Armguard;
+			break;
+		case 9:
+			.@part = EQI_ARMOR;
+			.@equip_id = Ninja_Scale_Armor;
+			break;
+		case 10:
+			.@part = EQI_ARMOR;
+			.@equip_id = Tenebris_Latitantes;
+			break;
+		case 11:
+			.@part = EQI_ARMOR;
+			.@equip_id = Special_Ninja_Suit_;
+			break;
+		}
+		mes "[Artesão Tene]";
+		mes "Você deseja resetar sua ^44B7BC" + getitemname(.@equip_id) + "^000000?";
+		next;
+		mes "[Artesão Tene]";
+		mes "O custo é o mesmo, mas posso te fornecer um serviço para remover apenas a opção no slot 3 e deixar o 4º slot como está. Você está interessado?";
+		next;
+		switch (select("Resetar Somente o 3º Slot.:Resetar todos Slots.")) {
+		case 1:
+			mes "[Artesão Tene]";
+			mes "Muito bem. Resetarei somente seu 3º slot então.";
+			next;
+			.@only_3rd = true;
+			break;
+		case 2:
+			mes "[Artesão Tene]";
+			mes "Muito bem. Resetarei todos os slots então.";
+			next;
+			break;
+		}
+		.@remove = true;
+		break;
+	}
+	if (getequipisequiped(.@part) == 0) {
+		mes "[Artesão Tene]";
+		mes "Você terá que equipar todos os itens antes de ^44B7BC" + getitemname(.@equip_id) + "^000000.";
+		close;
+	}
+	if (Zeny < 100000) { // Tradução Manual
+		mes "[Artesão Tene]";
+		mes "Sinto muito, mas você não possui zenys suficientes!";
+		next;
+		mes "[Artesão Tene]";
+		mes "Nossa carga é muito baixa, por favor, tenha paciência comigo.";
+		close;
+	}
+	if (getequipid(.@part) != .@equip_id) {
+		mes "[Artesão Tene]";
+		mes "Eu não acho que este é o equipamento que você solicitou.";
+		next;
+		mes "[Artesão Tene]";
+		mes "Não consigo trabalhar com equipamentos que não estejam na minha lista.";
+		close;
+	}
+
+	.@equip_refine = getequiprefinerycnt(.@part);
+	setarray .@equip_card, getequipcardid(.@part,0),getequipcardid(.@part,1),getequipcardid(.@part,2),getequipcardid(.@part,3);
+
+	.@enchants = callsub(S_IsEnchanted, .@equip_card[0], .@equip_card[1], .@equip_card[2], .@equip_card[3]);
+	// Inicialização
+	if (.@remove) {
+		if (!.@enchants) {
+			mes "[Artesão Tene]";
+			mes "Este equipamento não está encantado. Por favor verifique-o novamente."; //tradução manual
+			close;
+		}
+		if (.@only_3rd && .@enchants < 2) {
+			mes "[Artesão Tene]";
+			mes "O 3º slot não está encantado. Por favor verifique-o novamente."; //tradução manual
+			close;
+		}
+		.@equip_card[2] = 0;
+		if (!.@only_3rd)
+			.@equip_card[3] = 0;
+		progressbar "ffff00",2;
+		Zeny -= 100000;
+		delequip .@part;
+		getitem2 .@equip_id,1,1,.@equip_refine,0,.@equip_card[0],.@equip_card[1],.@equip_card[2],.@equip_card[3];
+
+		mes "[Artesão Tene]";
+		mes "Inicialização concluída.";
+		close;
+	}
+
+	// Encantamentos
+	if (.@equip_refine <= 4)       .@ko_type01 = 1;
+	else if (.@equip_refine <= 7)  .@ko_type01 = 2;
+	else if (.@equip_refine <= 9)  .@ko_type01 = 3;
+	else if (.@equip_refine <= 12) .@ko_type01 = 4;
+	else                           .@ko_type01 = 5;
+
+	//tradução manual
+	.@available_slots = callsub(S_CanEnchant, .@equip_card[0], .@equip_card[1], .@equip_card[2], .@equip_card[3]);
+	if (!.@available_slots) {
+		mes "[Artesão Tene]";
+		mes "Este equipamento não pode ser mais encantado.";
+		next;
+		mes "[Artesão Tene]";
+		mes "Se você não estiver satisfeito com os encantamentos, sugiro que você mesmo os encante.";
+		close;
+	}
+	mes "[Artesão Tene]";
+	if (.@available_slots < 2)
+		mes "O quarto slot já foi encantado. Devo encantar o terceiro slot também?";
+	else
+		mes "Este equipamento não está encantado atualmente. Devo encantar o quarto slot?";
+	next;
+	if (select("Talvez mais tarde:Pode Encantar") == 1) {
+		mes "[Artesão Tene]";
+		mes "Muito bem. Vejo você mais tarde.";
+		close;
+	}
+	mes "[Artesão Tene]";
+	if (.@available_slots < 2)
+		mes "Começando a encantar o terceiro slot.";
+	else
+		mes "Começando a encantar o quarto slot.";
+	next;
+	if (.@available_slots >= 2) { // slot 4
+		.@r = rand(1,1000);
+		switch (.@ko_type01) {
+		case 1:
+			if (.@r <= 200)      .@e_socket04 = Mdef2;
+			else if (.@r <= 350) .@e_socket04 = Mdef4;
+			else if (.@r <= 450) .@e_socket04 = Mdef6;
+			else if (.@r <= 500) .@e_socket04 = Mdef8;
+			else if (.@r <= 700) .@e_socket04 = Def3;
+			else if (.@r <= 850) .@e_socket04 = Def6;
+			else if (.@r <= 950) .@e_socket04 = Def9;
+			else                 .@e_socket04 = Def12;
+			.@enchant = .@e_socket04;
+			break;
+		case 2:
+			if (.@r <= 90)       .@d_socket04 = Mdef2;
+			else if (.@r <= 170) .@d_socket04 = Mdef4;
+			else if (.@r <= 240) .@d_socket04 = Mdef6;
+			else if (.@r <= 300) .@d_socket04 = Mdef8;
+			else if (.@r <= 390) .@d_socket04 = Def3;
+			else if (.@r <= 470) .@d_socket04 = Def6;
+			else if (.@r <= 540) .@d_socket04 = Def9;
+			else if (.@r <= 600) .@d_socket04 = Def12;
+			else if (.@r <= 660) .@d_socket04 = Strength1;
+			else if (.@r <= 720) .@d_socket04 = Inteligence1;
+			else if (.@r <= 780) .@d_socket04 = Vitality1;
+			else if (.@r <= 840) .@d_socket04 = Dexterity1;
+			else if (.@r <= 900) .@d_socket04 = Agility1;
+			else                 .@d_socket04 = Luck1;
+			.@enchant = .@d_socket04;
+			break;
+		case 3:
+			if (.@r <= 90)       .@c_socket04 = Strength1;
+			else if (.@r <= 180) .@c_socket04 = Inteligence1;
+			else if (.@r <= 270) .@c_socket04 = Vitality1;
+			else if (.@r <= 360) .@c_socket04 = Dexterity1;
+			else if (.@r <= 450) .@c_socket04 = Agility1;
+			else if (.@r <= 600) .@c_socket04 = Luck1;
+			else if (.@r <= 660) .@c_socket04 = Strength2;
+			else if (.@r <= 720) .@c_socket04 = Inteligence2;
+			else if (.@r <= 780) .@c_socket04 = Vitality2;
+			else if (.@r <= 840) .@c_socket04 = Dexterity2;
+			else if (.@r <= 900) .@c_socket04 = Agility2;
+			else                 .@c_socket04 = Luck2;
+			.@enchant = .@c_socket04;
+			break;
+		case 4:
+			if (.@r <= 70)       .@b_socket04 = Strength1;
+			else if (.@r <= 140) .@b_socket04 = Inteligence1;
+			else if (.@r <= 210) .@b_socket04 = Vitality1;
+			else if (.@r <= 280) .@b_socket04 = Dexterity1;
+			else if (.@r <= 350) .@b_socket04 = Agility1;
+			else if (.@r <= 440) .@b_socket04 = Luck1;
+			else if (.@r <= 495) .@b_socket04 = Strength2;
+			else if (.@r <= 550) .@b_socket04 = Inteligence2;
+			else if (.@r <= 605) .@b_socket04 = Vitality2;
+			else if (.@r <= 660) .@b_socket04 = Dexterity2;
+			else if (.@r <= 715) .@b_socket04 = Agility2;
+			else if (.@r <= 800) .@b_socket04 = Luck2;
+			else if (.@r <= 860) .@b_socket04 = HP100;
+			else if (.@r <= 910) .@b_socket04 = HP200;
+			else if (.@r <= 950) .@b_socket04 = HP300;
+			else if (.@r <= 980) .@b_socket04 = SP50;
+			else                 .@b_socket04 = SP100;
+			.@enchant = .@b_socket04;
+			break;
+		case 5:
+			if (.@r <= 59)       .@a_socket04 = Strength2;
+			else if (.@r <= 118) .@a_socket04 = Inteligence2;
+			else if (.@r <= 177) .@a_socket04 = Vitality2;
+			else if (.@r <= 236) .@a_socket04 = Dexterity2;
+			else if (.@r <= 295) .@a_socket04 = Agility2;
+			else if (.@r <= 354) .@a_socket04 = Luck2;
+			else if (.@r <= 413) .@a_socket04 = HP100;
+			else if (.@r <= 472) .@a_socket04 = HP200;
+			else if (.@r <= 530) .@a_socket04 = HP300;
+			else if (.@r <= 589) .@a_socket04 = SP50;
+			else if (.@r <= 648) .@a_socket04 = SP100;
+			else if (.@r <= 707) .@a_socket04 = Strength3;
+			else if (.@r <= 765) .@a_socket04 = Inteligence3;
+			else if (.@r <= 824) .@a_socket04 = Vitality3;
+			else if (.@r <= 883) .@a_socket04 = Dexterity3;
+			else if (.@r <= 942) .@a_socket04 = Agility3;
+			else                 .@a_socket04 = Luck3;
+			.@enchant = .@a_socket04;
+			break;
+		}
+		.@equip_card[2] = .@enchant;
+	} else if (.@available_slots == 1) { // slot 3
+		.@r = rand(1,1000);
+		switch (.@ko_type01) {
+		case 1:
+			if (.@r <= 125)      .@e_socket03 = Mdef2;
+			else if (.@r <= 250) .@e_socket03 = Mdef4;
+			else if (.@r <= 375) .@e_socket03 = Mdef6;
+			else if (.@r <= 500) .@e_socket03 = Mdef8;
+			else if (.@r <= 625) .@e_socket03 = Def3;
+			else if (.@r <= 750) .@e_socket03 = Def6;
+			else if (.@r <= 875) .@e_socket03 = Def9;
+			else                 .@e_socket03 = Def12;
+			.@enchant = .@e_socket03;
+			break;
+		case 2:
+			if (.@r <= 100)      .@d_socket03 = Mdef2;
+			else if (.@r <= 190) .@d_socket03 = Mdef4;
+			else if (.@r <= 270) .@d_socket03 = Mdef6;
+			else if (.@r <= 340) .@d_socket03 = Mdef8;
+			else if (.@r <= 440) .@d_socket03 = Def3;
+			else if (.@r <= 530) .@d_socket03 = Def6;
+			else if (.@r <= 610) .@d_socket03 = Def9;
+			else if (.@r <= 680) .@d_socket03 = Def12;
+			else if (.@r <= 720) .@d_socket03 = Strength1;
+			else if (.@r <= 760) .@d_socket03 = Inteligence1;
+			else if (.@r <= 800) .@d_socket03 = Vitality1;
+			else if (.@r <= 850) .@d_socket03 = Dexterity1;
+			else if (.@r <= 880) .@d_socket03 = Agility1;
+			else                 .@d_socket03 = Luck1;
+			.@enchant = .@d_socket03;
+			break;
+		case 3:
+			if (.@r <= 100)      .@c_socket03 = Strength1;
+			else if (.@r <= 200) .@c_socket03 = Inteligence1;
+			else if (.@r <= 305) .@c_socket03 = Vitality1;
+			else if (.@r <= 410) .@c_socket03 = Dexterity1;
+			else if (.@r <= 500) .@c_socket03 = Agility1;
+			else if (.@r <= 700) .@c_socket03 = Luck1;
+			else if (.@r <= 750) .@c_socket03 = Strength2;
+			else if (.@r <= 780) .@c_socket03 = Inteligence2;
+			else if (.@r <= 830) .@c_socket03 = Vitality2;
+			else if (.@r <= 880) .@c_socket03 = Dexterity2;
+			else if (.@r <= 900) .@c_socket03 = Agility2;
+			else                 .@c_socket03 = Luck2;
+			.@enchant = .@c_socket03;
+			break;
+		case 4:
+			if (.@r <= 70)       .@b_socket03 = Strength1;
+			else if (.@r <= 160) .@b_socket03 = Inteligence1;
+			else if (.@r <= 250) .@b_socket03 = Vitality1;
+			else if (.@r <= 340) .@b_socket03 = Dexterity1;
+			else if (.@r <= 400) .@b_socket03 = Agility1;
+			else if (.@r <= 500) .@b_socket03 = Luck1;
+			else if (.@r <= 540) .@b_socket03 = Strength2;
+			else if (.@r <= 580) .@b_socket03 = Inteligence2;
+			else if (.@r <= 625) .@b_socket03 = Vitality2;
+			else if (.@r <= 670) .@b_socket03 = Dexterity2;
+			else if (.@r <= 700) .@b_socket03 = Agility2;
+			else if (.@r <= 800) .@b_socket03 = Luck2;
+			else if (.@r <= 860) .@b_socket03 = HP100;
+			else if (.@r <= 900) .@b_socket03 = HP200;
+			else if (.@r <= 920) .@b_socket03 = HP300;
+			else if (.@r <= 965) .@b_socket03 = SP50;
+			else                 .@b_socket03 = SP100;
+			.@enchant = .@b_socket03;
+			break;
+		case 5:
+			if (.@r <= 59)       .@a_socket03 = Strength2;
+			else if (.@r <= 118) .@a_socket03 = Inteligence2;
+			else if (.@r <= 177) .@a_socket03 = Vitality2;
+			else if (.@r <= 236) .@a_socket03 = Dexterity2;
+			else if (.@r <= 295) .@a_socket03 = Agility2;
+			else if (.@r <= 354) .@a_socket03 = Luck2;
+			else if (.@r <= 413) .@a_socket03 = HP100;
+			else if (.@r <= 472) .@a_socket03 = HP200;
+			else if (.@r <= 530) .@a_socket03 = HP300;
+			else if (.@r <= 589) .@a_socket03 = SP50;
+			else if (.@r <= 648) .@a_socket03 = SP100;
+			else if (.@r <= 707) .@a_socket03 = Strength3;
+			else if (.@r <= 765) .@a_socket03 = Inteligence3;
+			else if (.@r <= 824) .@a_socket03 = Vitality3;
+			else if (.@r <= 883) .@a_socket03 = Dexterity3;
+			else if (.@r <= 942) .@a_socket03 = Agility3;
+			else                 .@a_socket03 = Luck3;
+			.@enchant = .@a_socket03;
+			break;
+		}
+		.@equip_card[2] = .@equip_card[3];
+		.@equip_card[3] = .@enchant;
+	} else {
+		mes "[Artesão Tene]";
+		mes "Um erro desconhecido ocorreu. Entre em contato com o atendimento ao cliente. *^_^*";
+		close;
+	}
+	progressbar "0xFFFF00",2;
+	Zeny -= 100000;
+	delequip .@part;
+
+	getitem2 .@equip_id,1,1,.@equip_refine,0,.@equip_card[0],.@equip_card[1],.@equip_card[2],.@equip_card[3];
+
+	mes "[Artesão Tene]";
+	mes "^44B7BC" + getitemname(.@equip_id) + "^000000";
+	mes "O equipamento foi encantado."; //tradução manual
+	close;
+
+/**
+ * Verifica se o item que possui cartas antes de ser encantado
+ *
+ * callsub(S_IsEnchanted, <card1>, <card2>, <card3>, <card4>)
+ *
+ * @param card1, card2, card3, card4: IDs das cartas em seus respectivos slots
+ * @retornar número de vezes encantado ({0, 1, 2})
+ */
+S_IsEnchanted:
+	.@card1 = getarg(0);
+	.@card2 = getarg(1);
+	.@card3 = getarg(2);
+	.@card4 = getarg(3);
+	if (.@card1 == -256 || .@card1 == 254 || .@card1 == 255)
+		return 0;
+	if (.@card3 >= 4700 && .@card3 < 5000) {
+		if (.@card4 >= 4700 && .@card4 < 5000) {
+			return 2;
+		}
+		return 1;
+	}
+	return 0;
+
+/**
+ * Verifica se o item já foi encantado
+ *
+ * callsub(S_CanEnchant, <card1>, <card2>, <card3>, <card4>)
+ *
+ * @param card1, card2, card3, card4: IDs das cartas em seus respectivos slots
+ * @retornar número de vezes encantado ({2, 1, 0})
+ */
+S_CanEnchant:
+	.@card1 = getarg(0);
+	.@card2 = getarg(1);
+	.@card3 = getarg(2);
+	.@card4 = getarg(3);
+	if (.@card1 != 0)
+		return 0;
+	if (.@card2 != 0)
+		return 0;
+	if (.@card3 != 0)
+		return 0;
+	if (.@card4 != 0) {
+		if (.@card4 < 4700 || .@card4 >= 5000)
+			return 0;
+		return 1;
+	}
+	return 2;
+}
